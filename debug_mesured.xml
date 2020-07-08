@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene version="2.0.0">
+  <integrator type="path"/>
+  <bsdf type="measured" id="myMat">
+    <!-- <string name="distribution" value="ggx"/>
+    <float name="alpha_u" value="0.01"/>
+    <float name="alpha_v" value="0.5"/> -->
+    <!-- <string name="material" value="Al"/>
+    <texture type="bitmap" name = "ndf">
+      <string name="filename" value="debug_2.exr"/>
+    </texture> -->
+    <string name="filename" value="m_mat_test"/>
+  </bsdf>
+
+  <shape type="disk">
+    <bsdf type="twosided">
+      <ref name="bsdf" id="myMat"/>
+    </bsdf>
+    <transform name="to_world">
+      <translate x="0" y="0" z="0.3"/>
+    </transform>
+  </shape>
+
+  <sensor type="perspective" id="Camera-camera">
+    <string name="fov_axis" value="smaller"/>
+    <float name="focus_distance" value="6.0"/>
+    <float name="fov" value="28.8415"/>
+    <transform name="to_world">
+      <lookat target="3.04072, -2.85176, 2.80939" origin="3.69558, -3.46243, 3.25463" up="-0.317366, 0.312466, 0.895346"/>
+    </transform>
+    <sampler type="independent"> 
+      <integer name="sample_count" value="32"/>
+    </sampler>
+    <film type="hdrfilm" id="film">
+      <integer name="width" value="1024"/>
+      <integer name="height" value="1024"/>
+      <string name="pixel_format" value="rgb"/>
+      <!-- <boolean name="banner" value="false"/> -->
+      <rfilter type="gaussian"/>
+    </film>
+  </sensor>
+  
+    <emitter type="point">
+        <spectrum name="intensity" value="50"/>
+        <point name="position" x="0" y="1" z="2"/>
+    </emitter>
+
+  <texture type="checkerboard" id="planetex">
+    <rgb name="color0" value="0.4"/>
+    <rgb name="color1" value="0.2"/>
+    <transform name="to_uv">
+        <scale x="4" y="4" />
+    </transform>
+  </texture>
+
+  <bsdf type="diffuse" id="planemat">
+    <ref name="reflectance" id="planetex"/>
+  </bsdf>
+  <shape type="serialized" id="Plane-mesh_0">
+    <string name="filename" value="matpreview.serialized"/>
+    <integer name="shape_index" value="0"/>
+    <transform name="to_world">
+      <rotate z="1" angle="-4.3"/>
+      <matrix value="3.38818 -4.06354 0 -1.74958 4.06354 3.38818 0 1.43683 0 0 5.29076 -0.0120714 0 0 0 1"/>
+    </transform>
+    <ref name="bsdf" id="planemat"/>
+  </shape>
+
+</scene>
